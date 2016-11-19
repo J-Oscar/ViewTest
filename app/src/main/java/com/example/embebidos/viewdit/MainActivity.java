@@ -2,6 +2,7 @@ package com.example.embebidos.viewdit;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -93,10 +94,13 @@ public class MainActivity extends AppCompatActivity {
 
         Bitmap bitmap = null;
         Bitmap bitmap2 = null;
+        int pix[];
         try {
             bitmap = MediaStore.Images.Media.getBitmap( getApplicationContext().getContentResolver(), fotoUri);
 
-            bitmap2 = MatToBit(GrayScale(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
+            bitmap2 = MatToBit(BLUE(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
+            //pix = ChannelRed(bitmap);
+            //bitmap2.setPixels(pix, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
             campoFoto = (ImageView) findViewById(R.id.imageContent);
             campoFoto.setImageBitmap(bitmap2);
             //AlertDialog.Builder b = new AlertDialog.Builder(this);
@@ -142,6 +146,8 @@ public class MainActivity extends AppCompatActivity {
 
     private int[][][] GrayScale(int mat[][][], int w, int h)
     {
+
+        //r = red();
         int matriz[][][] = new int[w][h][4];
         for (int y = 0; y < h; y++)
             for (int x = 0; x < w; x++)
@@ -153,6 +159,132 @@ public class MainActivity extends AppCompatActivity {
                 matriz[x][y][1] = R; matriz[x][y][2] = R; matriz[x][y][3] = R;
             }
         return matriz;
+    }
+
+    private int[][][] viejito(int mat[][][], int w, int h)
+    {
+
+        //r = red();
+        int matriz[][][] = new int[w][h][4];
+        for (int y = 0; y < h; y++)
+            for (int x = 0; x < w; x++)
+            {
+                int r = mat[x][y][1];
+                int g = mat[x][y][2];
+                int b = mat[x][y][3];
+                int R = (int)(1*r + 0.5*g + 0.5*b);
+                matriz[x][y][1] = R; matriz[x][y][2] = R; matriz[x][y][3] = R;
+            }
+        return matriz;
+    }
+
+    private int[][][] Probando1(int mat[][][], int w, int h)
+    {
+
+        //r = red();
+        int matriz[][][] = new int[w][h][4];
+        for (int y = 0; y < h; y++)
+            for (int x = 0; x < w; x++)
+            {
+                int r = mat[x][y][1];
+                int g = mat[x][y][2];
+                int b = mat[x][y][3];
+                int R = (int)(0.5*r + 0.5*g + 0.5*b);
+                matriz[x][y][1] = R; matriz[x][y][2] = R; matriz[x][y][3] = R;
+            }
+        return matriz;
+    }
+
+    private int[][][] Raquel(int mat[][][], int w, int h)
+    {
+
+        //r = red();
+        int matriz[][][] = new int[w][h][4];
+        for (int y = 0; y < h; y++)
+            for (int x = 0; x < w; x++)
+            {
+                int r = mat[x][y][1];
+                int g = mat[x][y][2];
+                int b = mat[x][y][3];
+                //int R = (int)(1.5*r + .3*g + 0.5*b);
+                r = 255 - r; g = 255 - g; b = 255 - b;
+                matriz[x][y][1] = r; matriz[x][y][2] = g; matriz[x][y][3] = b;
+            }
+        return matriz;
+    }
+
+    private int[][][] RED(int mat[][][], int w, int h)
+    {
+
+        //r = red();
+        int matriz[][][] = new int[w][h][4];
+        for (int y = 0; y < h; y++)
+            for (int x = 0; x < w; x++)
+            {
+                int r = mat[x][y][1];
+                int g = mat[x][y][2];
+                int b = mat[x][y][3];
+                //int R = (int)(0.5*r + 0.5*g + 0.5*b);
+                matriz[x][y][1] = r; matriz[x][y][2] = 0; matriz[x][y][3] = 0;
+            }
+        return matriz;
+    }
+    private int[][][] GREEN(int mat[][][], int w, int h)
+    {
+
+        //r = red();
+        int matriz[][][] = new int[w][h][4];
+        for (int y = 0; y < h; y++)
+            for (int x = 0; x < w; x++)
+            {
+                int r = mat[x][y][1];
+                int g = mat[x][y][2];
+                int b = mat[x][y][3];
+                //int R = (int)(0.5*r + 0.5*g + 0.5*b);
+                matriz[x][y][1] = 0; matriz[x][y][2] = g; matriz[x][y][3] = 0;
+            }
+        return matriz;
+    }
+
+    private int[][][] BLUE(int mat[][][], int w, int h)
+    {
+
+        //r = red();
+        int matriz[][][] = new int[w][h][4];
+        for (int y = 0; y < h; y++)
+            for (int x = 0; x < w; x++)
+            {
+                int r = mat[x][y][1];
+                int g = mat[x][y][2];
+                int b = mat[x][y][3];
+                //int R = (int)(0.5*r + 0.5*g + 0.5*b);
+                matriz[x][y][1] = 0; matriz[x][y][2] = 0; matriz[x][y][3] = b;
+            }
+        return matriz;
+    }
+
+    private int[][][] Blur(int mat[][][], int w, int h)
+    {
+        int r1 = 0, r2 = 0, r3 = 0;
+        int salida[][][] = new int[w][h][4];
+        for (int y = 1; y < h-1; y++)
+        {
+            for (int x = 1; x < w-1; x++)
+            {
+                for(int i = -1; i<1; i++)
+                    for(int j = -1; j<1; j++)
+                    {
+                        r1 = r1 + mat[x+j][y+i][1];
+                        r2 = r2 + mat[x+j][y+i][2];
+                        r3 = r3 + mat[x+j][y+i][3];
+                    }
+                salida[x][y][1] = (int) Math.round(r1/9);
+                salida[x][y][2] = (int) Math.round(r2/9);
+                salida[x][y][3] = (int) Math.round(r3/9);
+                r1 = 0; r2 = 0; r3 = 0;
+            }
+        }
+        return salida;
     }
 
     private Bitmap MatToBit(int mat[][][], int w, int h)
