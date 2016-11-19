@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void saveEdition() throws FileNotFoundException {
         String photoName = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "VIEWDIT_" + photoName + ".jpg";
+        String imageFileName = "EDITED_" + photoName + ".jpg";
 
         String storage = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/VIEWDIT";
         OutputStream fOut = null;
