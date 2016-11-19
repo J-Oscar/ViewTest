@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             }
         return matriz;
     }
-
+    //escala de grises
     private int[][][] GrayScale(int mat[][][], int w, int h)
     {
 
@@ -160,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
             }
         return matriz;
     }
+    //escala de grises con ruido
     private int[][][] viejito(int mat[][][], int w, int h)
     {
 
@@ -176,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
             }
         return matriz;
     }
-
+    //escala de grises con ruido inverso
     private int[][][] Probando1(int mat[][][], int w, int h)
     {
 
@@ -193,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
             }
         return matriz;
     }
-
+    //inversion de colores
     private int[][][] Raquel(int mat[][][], int w, int h)
     {
 
@@ -211,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
             }
         return matriz;
     }
-
+    //RED
     private int[][][] RED(int mat[][][], int w, int h)
     {
 
@@ -229,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         return matriz;
     }
 
-
+    //GREEN
     private int[][][] GREEN(int mat[][][], int w, int h)
     {
 
@@ -246,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
             }
         return matriz;
     }
-
+    //BLUE
     private int[][][] BLUE(int mat[][][], int w, int h)
     {
 
@@ -263,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
             }
         return matriz;
     }
-
+    //BLUR
     private int[][][] Blur(int mat[][][], int w, int h)
     {
         int r1 = 0, r2 = 0, r3 = 0;
