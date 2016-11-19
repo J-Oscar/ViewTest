@@ -1,9 +1,14 @@
 package com.example.embebidos.viewdit;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -26,7 +31,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
     public static final int PHOTO_CAMERA = 0;
     public static final int PHOTO_GALLERY = 1;
-    public static final int EDIT_PHOTO_CODE = 2;
+    public int ACTION = 0;
 
     private ImageView campoFoto;
     private ImageButton botonCamara;
@@ -71,13 +76,12 @@ public class MainActivity extends AppCompatActivity {
         File imagenFinal = new File(photoDir, imageName);
 
         fotoUri = Uri.fromFile(imagenFinal);
-        Toast mensaje = new Toast(this);
-        mensaje.makeText(this, fotoUri.toString(), Toast.LENGTH_LONG).show();
 
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, fotoUri);
 
         startActivityForResult(cameraIntent, PHOTO_CAMERA);
+        ACTION = 1;
     }
 
 
@@ -86,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PHOTO_GALLERY);
+        ACTION = 2;
     }
 
     public void setView() {
@@ -115,47 +120,49 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void selectIt(View view){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.title)
-                .setItems(R.array.filtros, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        try {
-                            bitmap = MediaStore.Images.Media.getBitmap( getApplicationContext().getContentResolver(), fotoUri);
-                        } catch (Exception e){
-                            e.printStackTrace();
-                        }
-                        switch (which){
-                            case 0:
-                                    bitmap2 = MatToBit(GrayScale(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
-                                break;
-                            case 1:
-                                bitmap2 = MatToBit(viejito(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
-                                break;
-                            case 2:
-                                bitmap2 = MatToBit(Probando1(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
-                                break;
-                            case 3:
-                                bitmap2 = MatToBit(Raquel(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
-                                break;
-                            case 4:
-                                bitmap2 = MatToBit(RED(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
-                                break;
-                            case 5:
-                                bitmap2 = MatToBit(GREEN(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
-                                break;
+        if(ACTION != 1) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.title)
+                    .setItems(R.array.filtros, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            try {
+                                bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), fotoUri);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            switch (which) {
+                                case 0:
+                                    bitmap2 = MatToBit(GrayScale(BitToMat(bitmap), bitmap.getWidth(), bitmap.getHeight()), bitmap.getWidth(), bitmap.getHeight());
+                                    break;
+                                case 1:
+                                    bitmap2 = MatToBit(viejito(BitToMat(bitmap), bitmap.getWidth(), bitmap.getHeight()), bitmap.getWidth(), bitmap.getHeight());
+                                    break;
+                                case 2:
+                                    bitmap2 = MatToBit(Probando1(BitToMat(bitmap), bitmap.getWidth(), bitmap.getHeight()), bitmap.getWidth(), bitmap.getHeight());
+                                    break;
+                                case 3:
+                                    bitmap2 = MatToBit(Raquel(BitToMat(bitmap), bitmap.getWidth(), bitmap.getHeight()), bitmap.getWidth(), bitmap.getHeight());
+                                    break;
+                                case 4:
+                                    bitmap2 = MatToBit(RED(BitToMat(bitmap), bitmap.getWidth(), bitmap.getHeight()), bitmap.getWidth(), bitmap.getHeight());
+                                    break;
+                                case 5:
+                                    bitmap2 = MatToBit(GREEN(BitToMat(bitmap), bitmap.getWidth(), bitmap.getHeight()), bitmap.getWidth(), bitmap.getHeight());
+                                    break;
 
-                            case 6:
-                                bitmap2 = MatToBit(BLUE(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
-                                break;
-                            case 7:
-                                bitmap2 = MatToBit(Blur(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
-                                break;
+                                case 6:
+                                    bitmap2 = MatToBit(BLUE(BitToMat(bitmap), bitmap.getWidth(), bitmap.getHeight()), bitmap.getWidth(), bitmap.getHeight());
+                                    break;
+                                case 7:
+                                    bitmap2 = MatToBit(Blur(BitToMat(bitmap), bitmap.getWidth(), bitmap.getHeight()), bitmap.getWidth(), bitmap.getHeight());
+                                    break;
+                            }
+                            setEditedView();
                         }
-                        setEditedView();
-                    }
-                });
-        builder.create();
-        builder.show();
+                    });
+            builder.create();
+            builder.show();
+        }
     }
 
     public void setEditedView() {
