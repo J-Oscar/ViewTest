@@ -229,74 +229,7 @@ public class MainActivity extends AppCompatActivity {
         return matriz;
     }
 
-    private int[][][] viejito(int mat[][][], int w, int h)
-    {
 
-        //r = red();
-        int matriz[][][] = new int[w][h][4];
-        for (int y = 0; y < h; y++)
-            for (int x = 0; x < w; x++)
-            {
-                int r = mat[x][y][1];
-                int g = mat[x][y][2];
-                int b = mat[x][y][3];
-                int R = (int)(1*r + 0.5*g + 0.5*b);
-                matriz[x][y][1] = R; matriz[x][y][2] = R; matriz[x][y][3] = R;
-            }
-        return matriz;
-    }
-
-    private int[][][] Probando1(int mat[][][], int w, int h)
-    {
-
-        //r = red();
-        int matriz[][][] = new int[w][h][4];
-        for (int y = 0; y < h; y++)
-            for (int x = 0; x < w; x++)
-            {
-                int r = mat[x][y][1];
-                int g = mat[x][y][2];
-                int b = mat[x][y][3];
-                int R = (int)(0.5*r + 0.5*g + 0.5*b);
-                matriz[x][y][1] = R; matriz[x][y][2] = R; matriz[x][y][3] = R;
-            }
-        return matriz;
-    }
-
-    private int[][][] Raquel(int mat[][][], int w, int h)
-    {
-
-        //r = red();
-        int matriz[][][] = new int[w][h][4];
-        for (int y = 0; y < h; y++)
-            for (int x = 0; x < w; x++)
-            {
-                int r = mat[x][y][1];
-                int g = mat[x][y][2];
-                int b = mat[x][y][3];
-                //int R = (int)(1.5*r + .3*g + 0.5*b);
-                r = 255 - r; g = 255 - g; b = 255 - b;
-                matriz[x][y][1] = r; matriz[x][y][2] = g; matriz[x][y][3] = b;
-            }
-        return matriz;
-    }
-
-    private int[][][] RED(int mat[][][], int w, int h)
-    {
-
-        //r = red();
-        int matriz[][][] = new int[w][h][4];
-        for (int y = 0; y < h; y++)
-            for (int x = 0; x < w; x++)
-            {
-                int r = mat[x][y][1];
-                int g = mat[x][y][2];
-                int b = mat[x][y][3];
-                //int R = (int)(0.5*r + 0.5*g + 0.5*b);
-                matriz[x][y][1] = r; matriz[x][y][2] = 0; matriz[x][y][3] = 0;
-            }
-        return matriz;
-    }
     private int[][][] GREEN(int mat[][][], int w, int h)
     {
 
