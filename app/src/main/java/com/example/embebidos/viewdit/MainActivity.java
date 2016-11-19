@@ -128,65 +128,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
                             case 0:
-
-                                break;
-                            case 1:
-
-                                break;
-                            case 2:
-
-                                break;
-                            case 3:
-
-                                break;
-                            case 4:
-
-                                break;
-                            case 5:
-
-                                break;
-                            case 6:
-
-                                break;
-                            case 7:
-
-                                break;
-
-                        }
-                    }
-                });
-        builder.create();
-        builder.show();
-    }
-
-    public void setEditedView() {
-        setContentView(R.layout.edit_photo);
-        if(fotoUri == null)
-            return;
-
-        bitmap = null;
-        bitmap2 = null;
-        int pix[];
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap( getApplicationContext().getContentResolver(), fotoUri);
-
-            bitmap2 = MatToBit(BLUE(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
-            //pix = ChannelRed(bitmap);
-            //bitmap2.setPixels(pix, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
-            campoFoto = (ImageView) findViewById(R.id.imageContent);
-            campoFoto.setImageBitmap(bitmap2);
-            //AlertDialog.Builder b = new AlertDialog.Builder(this);
-            //b.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.title)
-                .setItems(R.array.filtros, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case 0:
                                 bitmap2 = MatToBit(GrayScale(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
                                 break;
                             case 1:
@@ -211,6 +152,38 @@ public class MainActivity extends AppCompatActivity {
                             case 7:
                                 bitmap2 = MatToBit(Blur(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
                                 break;
+
+                        }
+                    }
+                });
+        builder.create();
+        builder.show();
+    }
+
+    public void setEditedView() {
+        setContentView(R.layout.edit_photo);
+        if(fotoUri == null)
+            return;
+
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap( getApplicationContext().getContentResolver(), fotoUri);
+
+            //bitmap2 = MatToBit(BLUE(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
+
+            campoFoto = (ImageView) findViewById(R.id.imageContent);
+            campoFoto.setImageBitmap(bitmap2);
+            //AlertDialog.Builder b = new AlertDialog.Builder(this);
+            //b.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.title)
+                .setItems(R.array.filtros, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+
 
                             default:
                                 break;
