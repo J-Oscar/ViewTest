@@ -245,7 +245,11 @@ public class MainActivity extends AppCompatActivity {
         Integer counter = 0;
         File file = new File(storage, imageFileName);
         fOut = new FileOutputStream(file);
-        bitmap2.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+        if(bitmap != null){
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+        } else {
+            bitmap2.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+        }
         try {
             fOut.flush();
             fOut.close();
