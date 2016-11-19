@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -22,7 +23,10 @@ import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -34,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView campoFoto;
     private ImageButton botonCamara;
     private ImageButton botonGaleria;
+    public Bitmap bitmap;
+    public Bitmap bitmap2;
     Uri fotoUri;
 
     @Override
@@ -92,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     public void setView() {
         setContentView(R.layout.edit_photo);
         if(fotoUri == null){ return; }
-        Bitmap bitmap = null;
+        bitmap = null;
 
         try {
             bitmap = MediaStore.Images.Media.getBitmap( getApplicationContext().getContentResolver(), fotoUri);
@@ -101,6 +107,17 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Button botonSave = (Button) findViewById(R.id.saveEdit);
+        botonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                try {
+                    saveEdition();
+                } catch (Exception e){
+
+                }
+            }
+        });
 
     }
 
@@ -125,8 +142,8 @@ public class MainActivity extends AppCompatActivity {
         if(fotoUri == null)
             return;
 
-        Bitmap bitmap = null;
-        Bitmap bitmap2 = null;
+        bitmap = null;
+        bitmap2 = null;
         int pix[];
         try {
             bitmap = MediaStore.Images.Media.getBitmap( getApplicationContext().getContentResolver(), fotoUri);
@@ -147,7 +164,11 @@ public class MainActivity extends AppCompatActivity {
                 .setItems(R.array.filtros, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
+                            case 0:
+                                break;
 
+                            default:
+                                break;
                         }
                     }
                 });
@@ -170,6 +191,26 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void saveEdition() throws FileNotFoundException {
+        String photoName = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "VIEWDIT_" + photoName + ".jpg";
+
+        String storage = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/VIEWDIT";
+        OutputStream fOut = null;
+        Integer counter = 0;
+        File file = new File(storage, imageFileName);
+        fOut = new FileOutputStream(file);
+        bitmap2.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+        try {
+            fOut.flush();
+            fOut.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
 
     private int[][][] BitToMat(Bitmap bmp)
     {
