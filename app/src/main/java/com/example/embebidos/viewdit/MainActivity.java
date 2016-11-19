@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -15,12 +14,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import android.app.Activity;
-import android.os.Bundle;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.widget.ImageView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -114,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     saveEdition();
                 } catch (Exception e){
-
+                    e.printStackTrace();
                 }
             }
         });
@@ -126,9 +119,14 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle(R.string.title)
                 .setItems(R.array.filtros, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            bitmap = MediaStore.Images.Media.getBitmap( getApplicationContext().getContentResolver(), fotoUri);
+                        } catch (Exception e){
+                            e.printStackTrace();
+                        }
                         switch (which){
                             case 0:
-                                bitmap2 = MatToBit(GrayScale(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
+                                    bitmap2 = MatToBit(GrayScale(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
                                 break;
                             case 1:
                                 bitmap2 = MatToBit(viejito(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
@@ -152,8 +150,8 @@ public class MainActivity extends AppCompatActivity {
                             case 7:
                                 bitmap2 = MatToBit(Blur(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
                                 break;
-
                         }
+                        setEditedView();
                     }
                 });
         builder.create();
@@ -162,36 +160,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void setEditedView() {
         setContentView(R.layout.edit_photo);
-        if(fotoUri == null)
-            return;
 
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap( getApplicationContext().getContentResolver(), fotoUri);
+        campoFoto = (ImageView) findViewById(R.id.imageContent);
+        campoFoto.setImageBitmap(bitmap2);
 
-            //bitmap2 = MatToBit(BLUE(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
-
-            campoFoto = (ImageView) findViewById(R.id.imageContent);
-            campoFoto.setImageBitmap(bitmap2);
-            //AlertDialog.Builder b = new AlertDialog.Builder(this);
-            //b.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.title)
-                .setItems(R.array.filtros, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-
-
-                            default:
-                                break;
-                        }
-                    }
-                });
-        builder.create();
-        builder.show();
+        Button botonSave = (Button) findViewById(R.id.saveEdit);
+        botonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                try {
+                    saveEdition();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -219,10 +202,10 @@ public class MainActivity extends AppCompatActivity {
         Integer counter = 0;
         File file = new File(storage, imageFileName);
         fOut = new FileOutputStream(file);
-        if(bitmap != null){
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
-        } else {
+        if(bitmap2 != null){
             bitmap2.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+        } else {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
         }
         try {
             fOut.flush();
