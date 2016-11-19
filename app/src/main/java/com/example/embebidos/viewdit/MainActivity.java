@@ -1,5 +1,7 @@
 package com.example.embebidos.viewdit;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -89,6 +91,37 @@ public class MainActivity extends AppCompatActivity {
 
     public void setView() {
         setContentView(R.layout.edit_photo);
+        if(fotoUri == null){ return; }
+        Bitmap bitmap = null;
+
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap( getApplicationContext().getContentResolver(), fotoUri);
+            campoFoto = (ImageView) findViewById(R.id.imageContent);
+            campoFoto.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void selectIt(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.title)
+                .setItems(R.array.filtros, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case 0:
+
+                                break;
+                        }
+                    }
+                });
+        builder.create();
+        builder.show();
+    }
+
+    public void setEditedView() {
+        setContentView(R.layout.edit_photo);
         if(fotoUri == null)
             return;
 
@@ -108,6 +141,18 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.title)
+                .setItems(R.array.filtros, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+
+                        }
+                    }
+                });
+        builder.create();
+        builder.show();
     }
 
     @Override

@@ -21,8 +21,19 @@
             android:text="Filtros"
             android:id="@+id/filters"
             android:onClick="selectIt"
+            android:layout_marginStart="60dp"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Guardar"
+            android:id="@+id/saveEdit"
+            android:onClick="saveEdition"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="58dp" />
 
     </RelativeLayout>
 
