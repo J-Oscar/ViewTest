@@ -183,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(resultCode == RESULT_OK) {
             if(requestCode == PHOTO_CAMERA){
+                galleryAddPic();
                 setView();
             } else {
                 if (requestCode == PHOTO_GALLERY){
@@ -201,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
         OutputStream fOut = null;
         Integer counter = 0;
         File file = new File(storage, imageFileName);
+        fotoUri = Uri.fromFile(file);
         fOut = new FileOutputStream(file);
         if(bitmap2 != null){
             bitmap2.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
@@ -213,7 +215,16 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e){
             e.printStackTrace();
         }
+        galleryAddPic();
 
+    }
+
+    public void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(fotoUri.getPath());
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
     }
 
 
