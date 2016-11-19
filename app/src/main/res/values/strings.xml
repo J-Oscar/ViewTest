@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Viewdit</string>
+    <string name="title">Escoge un filtro</string>
+
+    <string-array name="filtros">
+        <item>Escala de grises</item>
+        <item>Escala de grises con ruido</item>
+        <item>Escala de grises con ruido invertido</item>
+        <item>Inversion de colores</item>
+        <item>RED</item>
+        <item>GREEN</item>
+        <item>BLUE</item>
+        <item>BLUR</item>
+    </string-array>
 </resources>
+
