@@ -130,6 +130,28 @@ public class MainActivity extends AppCompatActivity {
                             case 0:
 
                                 break;
+                            case 1:
+
+                                break;
+                            case 2:
+
+                                break;
+                            case 3:
+
+                                break;
+                            case 4:
+
+                                break;
+                            case 5:
+
+                                break;
+                            case 6:
+
+                                break;
+                            case 7:
+
+                                break;
+
                         }
                     }
                 });
@@ -165,6 +187,28 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
                             case 0:
+                                bitmap2 = MatToBit(GrayScale(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
+                                break;
+                            case 1:
+                                bitmap2 = MatToBit(viejito(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
+                                break;
+                            case 2:
+                                bitmap2 = MatToBit(Probando1(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
+                                break;
+                            case 3:
+                                bitmap2 = MatToBit(Raquel(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
+                                break;
+                            case 4:
+                                bitmap2 = MatToBit(RED(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
+                                break;
+                            case 5:
+                                bitmap2 = MatToBit(GREEN(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
+                                break;
+                            case 6:
+                                bitmap2 = MatToBit(BLUE(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
+                                break;
+                            case 7:
+                                bitmap2 = MatToBit(Blur(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
                                 break;
 
                             default:
