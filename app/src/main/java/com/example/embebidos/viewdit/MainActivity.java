@@ -204,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
                             case 5:
                                 bitmap2 = MatToBit(GREEN(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
                                 break;
+
                             case 6:
                                 bitmap2 = MatToBit(BLUE(BitToMat(bitmap),bitmap.getWidth(),bitmap.getHeight()),bitmap.getWidth(),bitmap.getHeight());
                                 break;
